@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spellbook</title>
+    <!-- This will hold a spellbook div. It will have four tabs: "Actions", "Bonus Actions", "Reactions", and "Other" -->
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-size: 62.5%;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgb(107, 107, 107);
+      }
+      .spellbook {
+        height: 60%;
+        aspect-ratio: 1/1.3;
+        background: rgb(170, 170, 102);
+        position: relative;
+        border-radius: 10px;
+      }
+      .spellbook h2 {
+        font-size: 2rem;
+        color: rgb(255, 255, 255);
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -100%);
+        border: 1px solid;
+        padding: 0 8vh;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+      .spellbook h3 {
+        margin-top: 2%;
+        text-align: center;
+        font-size: 2.5rem;
+        color: rgb(255, 255, 255);
+      }
+      .abilities-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        place-items: center;
+      }
+      .ability,
+      .add {
+        width: 50px;
+        height: 50px;
+        border: red solid 1px;
+      }
+      .add {
+        background: rgb(0, 255, 13);
+        cursor: pointer;
+        visibility: hidden;
+      }
+      .tabs-container {
+        height: 100%;
+        width: 40px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        /*border: black solid 1px;*/
+        transform: translateX(100%);
+        display: flex;
+        flex-direction: column;
+        gap: 1%;
+        padding: 2% 0;
+      }
+      .tab {
+        width: 100%;
+        aspect-ratio: 1/1;
+        background: rgb(141, 141, 85);
+        border-top-right-radius: 20%;
+        border-bottom-right-radius: 20%;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .tab:hover {
+        background: rgb(170, 170, 102);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="spellbook">
+      <h2>Spellbook</h2>
+      <h3>Actions</h3>
+      <div class="abilities-container">
+        <div class="ability"></div>
+        <div class="ability"></div>
+        <div class="ability"></div>
+        <div class="ability"></div>
+        <div class="add"></div>
+      </div>
+      <div class="tabs-container">
+        <div class="tab" style="background: rgb(170, 170, 102)"></div>
+        <div class="tab"></div>
+        <div class="tab"></div>
+        <div class="tab"></div>
+      </div>
+    </div>
+  </body>
+</html>
