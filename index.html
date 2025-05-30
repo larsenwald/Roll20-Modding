@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spellbook</title>
     <!-- This will hold a spellbook div. It will have four tabs: "Actions", "Bonus Actions", "Reactions", and "Other" -->
+    <script
+      src="https://kit.fontawesome.com/6bbc25d724.js"
+      crossorigin="anonymous"
+    ></script>
     <style>
       * {
         box-sizing: border-box;
@@ -28,6 +32,45 @@
         position: relative;
         border-radius: 10px;
       }
+      .spellbook .edit {
+        position: absolute;
+        top: 7px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.5rem;
+        transition: 0.1s;
+      }
+      .spellbook .edit:hover,
+      .spellbook .add:hover {
+        transform: scale(1.15);
+      }
+      .spellbook .edit:active,
+      .spellbook .add:active {
+        transform: scale(0.9);
+      }
+      .spellbook .add {
+        position: absolute;
+        top: 7px;
+        left: 50px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.5rem;
+        transition: 0.1s;
+      }
       .spellbook h2 {
         font-size: 2rem;
         color: rgb(255, 255, 255);
@@ -47,23 +90,41 @@
         text-align: center;
         font-size: 2.5rem;
         color: rgb(255, 255, 255);
+        height: 6%;
       }
       .abilities-container {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 1fr);
         gap: 1rem;
         place-items: center;
+        height: 92%;
+        overflow-y: auto;
+        padding: 5%;
       }
-      .ability,
-      .add {
-        width: 50px;
-        height: 50px;
-        border: red solid 1px;
+      .ability {
+        width: 65px;
+        aspect-ratio: 1/1;
+        border: black solid 1px;
+        position: relative;
       }
-      .add {
-        background: rgb(0, 255, 13);
+      .ability .delete {
+        width: 20px;
+        aspect-ratio: 1/1;
+        content: "—";
+        position: absolute;
+        border-radius: 50%;
+        background: red;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: -10px;
+        top: -10px;
         cursor: pointer;
-        visibility: hidden;
+      }
+      .ability .delete:hover {
+        background: rgb(226, 1, 1);
       }
       .tabs-container {
         height: 100%;
@@ -90,25 +151,142 @@
       .tab:hover {
         background: rgb(170, 170, 102);
       }
+        .new-ability {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgb(170, 170, 102);
+            border: solid 1px black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .field{
+            display:flex;
+            flex-direction: column;
+        }
+
+      .hidden {
+        visibility: hidden;
+      }
+      .highlighted {
+        background: rgba(0, 0, 0, 0.39) !important;
+      }
     </style>
   </head>
   <body>
     <div class="spellbook">
       <h2>Spellbook</h2>
+      <button class="edit">
+        <i class="fa-solid fa-feather-pointed"></i>
+      </button>
+      <button class="add hidden"><i class="fa-solid fa-plus"></i></button>
       <h3>Actions</h3>
       <div class="abilities-container">
-        <div class="ability"></div>
-        <div class="ability"></div>
-        <div class="ability"></div>
-        <div class="ability"></div>
-        <div class="add"></div>
+        <div class="ability">
+          <div class="delete hidden"><i class="fa-solid fa-minus"></i></div>
+        </div>
+        <div class="ability">
+          <div class="delete hidden"><i class="fa-solid fa-minus"></i></div>
+        </div>
+        <div class="ability">
+          <div class="delete hidden"><i class="fa-solid fa-minus"></i></div>
+        </div>
       </div>
       <div class="tabs-container">
-        <div class="tab" style="background: rgb(170, 170, 102)"></div>
-        <div class="tab"></div>
-        <div class="tab"></div>
-        <div class="tab"></div>
+        <div
+          class="tab"
+          id="actions"
+          style="background: rgb(170, 170, 102)"
+        ></div>
+        <div class="tab" id="bonus-actions"></div>
+        <div class="tab" id="reactions"></div>
+        <div class="tab" id="other"></div>
+      </div>
+      <div class="new-ability hidden">
+        <h3>New Ability</h3>
+        <div class="field">
+            <label for="ability-name">Name:</label>
+            <input type="text" id="ability-name" />
+        </div>
+        <div class="field">
+            <label for="ability-description">Description:</label>
+            <textarea id="ability-description" rows="4"></textarea>
+        </div>
+        <div class="field">
+            <label for="ability-type">Type:</label>
+            <select id="ability-type">
+                <option value="0">Action</option>  <!-- to do: change the values to numbers -->
+                <option value="1">Bonus Action</option>
+                <option value="2">Reaction</option>
+                <option value="3">Other</option>
+            </select>
+      </div>
+      <div class="field">
+        <label for="ability-function">JS Function</label>
+            <textarea id="ability-function" rows="4" placeholder="Code that will be executed when this ability is triggered."></textarea>
+      </div>
+      <div class="field">
+        <button id="add-ability">Add Ability</button>
+        <button id="cancel-ability">Cancel</button>
       </div>
     </div>
+    <script src="character.js"></script>
+    <script>
+        //Activating edit mode
+      let editMode = false;
+      document.querySelector(".edit").addEventListener("click", () => {
+        editMode = !editMode;
+        const editButton = document.querySelector(".edit");
+        const addButton = document.querySelector(".add");
+        const deleteButtons = document.querySelectorAll(".delete");
+        if (editMode) {
+          editButton.classList.add("highlighted");
+          addButton.classList.remove("hidden");
+          deleteButtons.forEach((button) => button.classList.remove("hidden"));
+        } else {
+          editButton.classList.remove("highlighted");
+          addButton.classList.add("hidden");
+          deleteButtons.forEach((button) => button.classList.add("hidden"));
+        }
+      });
+
+        //Adding new ability
+        document.querySelector(".add").addEventListener("click", () => {
+            document.querySelector(".new-ability").classList.remove("hidden");
+            document.querySelector(".new-ability button[id='add-ability']").addEventListener("click", () => {
+                //create the action object and push it to the correct action array
+                const newAbility = {
+                    name: document.querySelector("#ability-name").value,
+                    description: document.querySelector("#ability-description").value,
+                    functions: [document.querySelector("#ability-function").value]
+                };
+                switch (document.querySelector("#ability-type").value) {
+                    case "0":
+                        character.actions.actions.push(newAbility);
+                        break;
+                    case "1":
+                        character.actions.bonusActions.push(newAbility);
+                        break;
+                    case "2":
+                        character.actions.reactions.push(newAbility);
+                        break;
+                    case "3":
+                        character.actions.other.push(newAbility);
+                        break;
+                }
+            })
+            document.querySelector(".new-ability button[id='cancel-ability']").addEventListener("click", () => {
+                document.querySelector(".new-ability").classList.add("hidden");
+                //also clear the input fields
+                document.querySelector("#ability-name").value = "";
+                document.querySelector("#ability-description").value = ""; 
+                document.querySelector("#ability-type").value = "action";
+                document.querySelector("#ability-function").value = "";
+            });
+        });
+    </script>
   </body>
 </html>

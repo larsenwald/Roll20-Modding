@@ -76,7 +76,7 @@ class Character {
     this.name   = name;
     this.level  = level;
 
-    this.actions = { actions: [], bonusActions: [], reactions: [], freeActions: [] };
+    this.actions = { actions: [], bonusActions: [], reactions: [], other: [] };
 
     this.inventory = {
       items:    [],
@@ -89,4 +89,8 @@ class Character {
   }
 }
 
-export default Character;
+// initialize a new character instance
+const character = new Character({
+  name: "Larsen's Character",
+  level: 1,
+});
