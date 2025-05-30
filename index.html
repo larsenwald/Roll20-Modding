@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spellbook</title>
-    <!-- This will hold a spellbook div. It will have four tabs: "Actions", "Bonus Actions", "Reactions", and "Other" -->
     <script
       src="https://kit.fontawesome.com/6bbc25d724.js"
       crossorigin="anonymous"
@@ -24,6 +23,7 @@
         justify-content: center;
         align-items: center;
         background: rgb(107, 107, 107);
+        font-family: "Georgia", serif;
       }
       .spellbook {
         height: 60%;
@@ -31,6 +31,7 @@
         background: rgb(170, 170, 102);
         position: relative;
         border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
       }
       .spellbook .edit {
         position: absolute;
@@ -47,6 +48,7 @@
         align-items: center;
         font-size: 2.5rem;
         transition: 0.1s;
+        color: #333;
       }
       .spellbook .edit:hover,
       .spellbook .add:hover {
@@ -70,6 +72,7 @@
         align-items: center;
         font-size: 2.5rem;
         transition: 0.1s;
+        color: #333;
       }
       .spellbook h2 {
         font-size: 2rem;
@@ -80,10 +83,8 @@
         transform: translate(-50%, -100%);
         border: 1px solid;
         padding: 0 8vh;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
+        border-radius: 20px;
+        background: rgba(0, 0, 0, 0.1);
       }
       .spellbook h3 {
         margin-top: 2%;
@@ -91,6 +92,7 @@
         font-size: 2.5rem;
         color: rgb(255, 255, 255);
         height: 6%;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
       }
       .abilities-container {
         display: grid;
@@ -105,13 +107,47 @@
       .ability {
         width: 65px;
         aspect-ratio: 1/1;
-        border: black solid 1px;
+        border: black solid 2px;
         position: relative;
+        background: linear-gradient(145deg, #d4d4a8, #b8b88c);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .ability:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(145deg, #e0e0b4, #c4c498);
+      }
+      .ability:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      }
+      .ability .name {
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #333;
+        line-height: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+      }
+      .ability .icon {
+        font-size: 1.5rem;
+        color: #555;
+        margin-bottom: 2px;
       }
       .ability .delete {
         width: 20px;
         aspect-ratio: 1/1;
-        content: "—";
         position: absolute;
         border-radius: 50%;
         background: red;
@@ -122,6 +158,8 @@
         right: -10px;
         top: -10px;
         cursor: pointer;
+        font-size: 1rem;
+        z-index: 10;
       }
       .ability .delete:hover {
         background: rgb(226, 1, 1);
@@ -132,7 +170,6 @@
         position: absolute;
         top: 0;
         right: 0;
-        /*border: black solid 1px;*/
         transform: translateX(100%);
         display: flex;
         flex-direction: column;
@@ -147,32 +184,125 @@
         border-bottom-right-radius: 20%;
         cursor: pointer;
         transition: background 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
       }
       .tab:hover {
         background: rgb(170, 170, 102);
       }
-        .new-ability {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgb(170, 170, 102);
-            border: solid 1px black;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .field{
-            display:flex;
-            flex-direction: column;
-        }
-
+      .new-ability {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgb(170, 170, 102);
+        border: solid 2px black;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        z-index: 100;
+        max-width: 400px;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      .new-ability h3 {
+        margin-bottom: 15px;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+      .field label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+      }
+      .field input,
+      .field textarea,
+      .field select {
+        padding: 8px;
+        border: 1px solid #666;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .field button {
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s;
+      }
+      #add-ability {
+        background: #4caf50;
+        color: white;
+      }
+      #add-ability:hover {
+        background: #45a049;
+      }
+      #cancel-ability {
+        background: #f44336;
+        color: white;
+      }
+      #cancel-ability:hover {
+        background: #da190b;
+      }
       .hidden {
         visibility: hidden;
       }
       .highlighted {
         background: rgba(0, 0, 0, 0.39) !important;
+      }
+      .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        padding: 20px;
+      }
+
+      /* Tooltip for abilities */
+      .ability[data-tooltip] {
+        position: relative;
+      }
+      .ability[data-tooltip]:hover::before {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        z-index: 1000;
+        max-width: 200px;
+        white-space: normal;
+      }
+      .ability[data-tooltip]:hover::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-top-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
       }
     </style>
   </head>
@@ -183,65 +313,336 @@
         <i class="fa-solid fa-feather-pointed"></i>
       </button>
       <button class="add hidden"><i class="fa-solid fa-plus"></i></button>
-      <h3>Actions</h3>
-      <div class="abilities-container">
-        <div class="ability">
-          <div class="delete hidden"><i class="fa-solid fa-minus"></i></div>
-        </div>
-        <div class="ability">
-          <div class="delete hidden"><i class="fa-solid fa-minus"></i></div>
-        </div>
-        <div class="ability">
-          <div class="delete hidden"><i class="fa-solid fa-minus"></i></div>
-        </div>
+      <h3 id="current-tab-title">Actions</h3>
+      <div class="abilities-container" id="abilities-container">
+        <!-- Abilities will be populated here -->
       </div>
       <div class="tabs-container">
-        <div
-          class="tab"
-          id="actions"
-          style="background: rgb(170, 170, 102)"
-        ></div>
-        <div class="tab" id="bonus-actions"></div>
-        <div class="tab" id="reactions"></div>
-        <div class="tab" id="other"></div>
+        <div class="tab active" id="actions" data-type="actions">
+          <i class="fa-solid fa-circle"></i>
+        </div>
+        <div class="tab" id="bonus-actions" data-type="bonusActions">
+          <i class="fa-solid fa-caret-up"></i>
+        </div>
+        <div class="tab" id="reactions" data-type="reactions">
+          <i class="fa-solid fa-diamond"></i>
+        </div>
+        <div class="tab" id="other" data-type="other">
+          <i class="fa-solid fa-square"></i>
+        </div>
       </div>
       <div class="new-ability hidden">
         <h3>New Ability</h3>
         <div class="field">
-            <label for="ability-name">Name:</label>
-            <input type="text" id="ability-name" />
+          <label for="ability-name">Name:</label>
+          <input type="text" id="ability-name" placeholder="e.g., Fireball" />
         </div>
         <div class="field">
-            <label for="ability-description">Description:</label>
-            <textarea id="ability-description" rows="4"></textarea>
+          <label for="ability-description">Description:</label>
+          <textarea
+            id="ability-description"
+            rows="3"
+            placeholder="Describe what this ability does..."
+          ></textarea>
         </div>
         <div class="field">
-            <label for="ability-type">Type:</label>
-            <select id="ability-type">
-                <option value="0">Action</option>  <!-- to do: change the values to numbers -->
-                <option value="1">Bonus Action</option>
-                <option value="2">Reaction</option>
-                <option value="3">Other</option>
-            </select>
-      </div>
-      <div class="field">
-        <label for="ability-function">JS Function</label>
-            <textarea id="ability-function" rows="4" placeholder="Code that will be executed when this ability is triggered."></textarea>
-      </div>
-      <div class="field">
-        <button id="add-ability">Add Ability</button>
-        <button id="cancel-ability">Cancel</button>
+          <label for="ability-type">Type:</label>
+          <select id="ability-type">
+            <option value="actions">Action</option>
+            <option value="bonusActions">Bonus Action</option>
+            <option value="reactions">Reaction</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="ability-function">JavaScript Function:</label>
+          <textarea
+            id="ability-function"
+            rows="4"
+            placeholder="// Code that manipulates the character object
+// Example: character.abilities.Strength.score += 2;
+// Or: console.log('Casting spell!');"
+          ></textarea>
+        </div>
+        <div class="field" style="flex-direction: row; justify-content: center">
+          <button id="add-ability">Add Ability</button>
+          <button id="cancel-ability">Cancel</button>
+        </div>
       </div>
     </div>
-    <script src="character.js"></script>
+
     <script>
-        //Activating edit mode
+      // Character System (integrated from character.js)
+      const ABILITY_NAMES = [
+        "Strength",
+        "Dexterity",
+        "Constitution",
+        "Intelligence",
+        "Wisdom",
+        "Charisma",
+      ];
+
+      const SKILL_DEFS = {
+        Acrobatics: "Dexterity",
+        AnimalHandling: "Wisdom",
+        Arcana: "Intelligence",
+        Athletics: "Strength",
+        Deception: "Charisma",
+        History: "Intelligence",
+        Insight: "Wisdom",
+        Intimidation: "Charisma",
+        Investigation: "Intelligence",
+        Medicine: "Wisdom",
+        Nature: "Intelligence",
+        Perception: "Wisdom",
+        Performance: "Charisma",
+        Persuasion: "Charisma",
+        Religion: "Intelligence",
+        SleightOfHand: "Dexterity",
+        Stealth: "Dexterity",
+        Survival: "Wisdom",
+      };
+
+      const abilityScoreBase = 10;
+      const makeAbility = () => ({
+        score: abilityScoreBase,
+        modifiers: [],
+        saveProficiency: false,
+      });
+      const makeAbilities = () =>
+        Object.fromEntries(ABILITY_NAMES.map((n) => [n, makeAbility()]));
+
+      const makeSkillProfs = () =>
+        Object.fromEntries(Object.keys(SKILL_DEFS).map((k) => [k, "none"]));
+
+      class Character {
+        constructor({
+          name = "Unnamed Adventurer",
+          level = 1,
+          abilities = {},
+          skills = {},
+          profs = {},
+          inventory = {},
+          attune = {},
+        } = {}) {
+          this.abilities = makeAbilities();
+          for (const [ability, data] of Object.entries(abilities)) {
+            Object.assign(this.abilities[ability], data);
+          }
+
+          this.skillProfs = makeSkillProfs();
+          Object.assign(this.skillProfs, skills);
+
+          this.proficiencies = {
+            weapons: [],
+            armor: [],
+            tools: [],
+            languages: [],
+            ...profs,
+          };
+
+          this.name = name;
+          this.level = level;
+
+          this.actions = {
+            actions: [],
+            bonusActions: [],
+            reactions: [],
+            other: [],
+          };
+
+          this.inventory = {
+            items: [],
+            weight: 0,
+            capacity: 0,
+            ...inventory,
+          };
+
+          this.attunement = { maxSlots: 3, usedSlots: 0, ...attune };
+        }
+      }
+
+      // Initialize character
+      const character = new Character({
+        name: "Larsen's Character",
+        level: 1,
+      });
+
+      // Add some sample abilities for demonstration
+      character.actions.actions.push({
+        name: "Attack",
+        description: "Make a weapon attack",
+        functions: ["console.log('Making an attack!');"],
+      });
+
+      character.actions.bonusActions.push({
+        name: "Second Wind",
+        description: "Regain hit points",
+        functions: ["console.log('Using Second Wind to heal!');"],
+      });
+
+      // UI State
       let editMode = false;
-      document.querySelector(".edit").addEventListener("click", () => {
+      let currentTab = "actions";
+
+      // DOM Elements
+      const editButton = document.querySelector(".edit");
+      const addButton = document.querySelector(".add");
+      const abilitiesContainer = document.getElementById("abilities-container");
+      const currentTabTitle = document.getElementById("current-tab-title");
+      const newAbilityModal = document.querySelector(".new-ability");
+      const tabs = document.querySelectorAll(".tab");
+
+      // Tab Management
+      const tabConfig = {
+        actions: { title: "Actions", icon: "fa-sword" },
+        bonusActions: { title: "Bonus Actions", icon: "fa-bolt" },
+        reactions: { title: "Reactions", icon: "fa-shield" },
+        other: { title: "Other", icon: "fa-magic" },
+      };
+
+      function switchTab(tabType) {
+        currentTab = tabType;
+
+        // Update tab highlighting
+        tabs.forEach((tab) => {
+          if (tab.dataset.type === tabType) {
+            tab.style.background = "rgb(170, 170, 102)";
+          } else {
+            tab.style.background = "rgb(141, 141, 85)";
+          }
+        });
+
+        // Update title
+        currentTabTitle.textContent = tabConfig[tabType].title;
+
+        // Render abilities for current tab
+        renderAbilities();
+      }
+
+      // Render abilities in the current tab
+      function renderAbilities() {
+        const abilities = character.actions[currentTab];
+        abilitiesContainer.innerHTML = "";
+
+        if (abilities.length === 0) {
+          const emptyState = document.createElement("div");
+          emptyState.className = "empty-state";
+          emptyState.textContent = `No ${tabConfig[
+            currentTab
+          ].title.toLowerCase()} available. Add some using the + button!`;
+          abilitiesContainer.appendChild(emptyState);
+          return;
+        }
+
+        abilities.forEach((ability, index) => {
+          const abilityElement = document.createElement("div");
+          abilityElement.className = "ability";
+          abilityElement.dataset.tooltip = ability.description;
+
+          abilityElement.innerHTML = `
+            <div class="icon"><i class="fa-solid ${getAbilityIcon(
+              ability.name
+            )}"></i></div>
+            <div class="name">${ability.name}</div>
+            <div class="delete hidden"><i class="fa-solid fa-minus"></i></div>
+          `;
+
+          // Add click handler to execute ability
+          abilityElement.addEventListener("click", (e) => {
+            if (!editMode) {
+              executeAbility(ability);
+            }
+          });
+
+          // Add delete handler
+          const deleteButton = abilityElement.querySelector(".delete");
+          deleteButton.addEventListener("click", (e) => {
+            e.stopPropagation();
+            deleteAbility(index);
+          });
+
+          abilitiesContainer.appendChild(abilityElement);
+        });
+
+        // Update delete button visibility
+        updateEditModeDisplay();
+      }
+
+      // Execute an ability (run its functions)
+      function executeAbility(ability) {
+        console.log(`Executing ${ability.name}: ${ability.description}`);
+
+        ability.functions.forEach((func) => {
+          try {
+            // Create a function from the string and execute it
+            const executeFunc = new Function("character", func);
+            executeFunc(character);
+          } catch (error) {
+            console.error(
+              `Error executing function for ${ability.name}:`,
+              error
+            );
+            console.error("Function code:", func);
+          }
+        });
+
+        // Visual feedback
+        const abilityElements = document.querySelectorAll(".ability");
+        const clickedElement = Array.from(abilityElements).find(
+          (el) => el.querySelector(".name").textContent === ability.name
+        );
+
+        if (clickedElement) {
+          clickedElement.style.transform = "scale(0.95)";
+          clickedElement.style.background =
+            "linear-gradient(145deg, #f0f0c4, #d4d4a8)";
+          setTimeout(() => {
+            clickedElement.style.transform = "";
+            clickedElement.style.background = "";
+          }, 200);
+        }
+      }
+
+      // Delete an ability
+      function deleteAbility(index) {
+        character.actions[currentTab].splice(index, 1);
+        renderAbilities();
+      }
+
+      // Get appropriate icon for ability based on name
+      function getAbilityIcon(name) {
+        const iconMap = {
+          attack: "fa-sword",
+          heal: "fa-heart",
+          shield: "fa-shield",
+          magic: "fa-magic",
+          fire: "fa-fire",
+          lightning: "fa-bolt",
+          wind: "fa-wind",
+          earth: "fa-mountain",
+          water: "fa-droplet",
+          default: "fa-star",
+        };
+
+        const lowerName = name.toLowerCase();
+        for (const [key, icon] of Object.entries(iconMap)) {
+          if (lowerName.includes(key)) {
+            return icon;
+          }
+        }
+        return iconMap.default;
+      }
+
+      // Edit Mode Management
+      function toggleEditMode() {
         editMode = !editMode;
-        const editButton = document.querySelector(".edit");
-        const addButton = document.querySelector(".add");
+        updateEditModeDisplay();
+      }
+
+      function updateEditModeDisplay() {
         const deleteButtons = document.querySelectorAll(".delete");
+
         if (editMode) {
           editButton.classList.add("highlighted");
           addButton.classList.remove("hidden");
@@ -251,42 +652,111 @@
           addButton.classList.add("hidden");
           deleteButtons.forEach((button) => button.classList.add("hidden"));
         }
+      }
+
+      // Modal Management
+      function showAddAbilityModal() {
+        newAbilityModal.classList.remove("hidden");
+        document.getElementById("ability-type").value = currentTab;
+      }
+
+      function hideAddAbilityModal() {
+        newAbilityModal.classList.add("hidden");
+        clearModalInputs();
+      }
+
+      function clearModalInputs() {
+        document.getElementById("ability-name").value = "";
+        document.getElementById("ability-description").value = "";
+        document.getElementById("ability-type").value = currentTab;
+        document.getElementById("ability-function").value = "";
+      }
+
+      function addNewAbility() {
+        const name = document.getElementById("ability-name").value.trim();
+        const description = document
+          .getElementById("ability-description")
+          .value.trim();
+        const type = document.getElementById("ability-type").value;
+        const functionCode = document
+          .getElementById("ability-function")
+          .value.trim();
+
+        if (!name) {
+          alert("Please enter a name for the ability.");
+          return;
+        }
+
+        const newAbility = {
+          name: name,
+          description: description || "No description provided",
+          functions: functionCode ? [functionCode] : [],
+        };
+
+        character.actions[type].push(newAbility);
+
+        // Switch to the tab where the ability was added if different
+        if (type !== currentTab) {
+          switchTab(type);
+        } else {
+          renderAbilities();
+        }
+
+        hideAddAbilityModal();
+      }
+
+      // Event Listeners
+      editButton.addEventListener("click", toggleEditMode);
+      addButton.addEventListener("click", showAddAbilityModal);
+
+      // Tab event listeners
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          switchTab(tab.dataset.type);
+        });
       });
 
-        //Adding new ability
-        document.querySelector(".add").addEventListener("click", () => {
-            document.querySelector(".new-ability").classList.remove("hidden");
-            document.querySelector(".new-ability button[id='add-ability']").addEventListener("click", () => {
-                //create the action object and push it to the correct action array
-                const newAbility = {
-                    name: document.querySelector("#ability-name").value,
-                    description: document.querySelector("#ability-description").value,
-                    functions: [document.querySelector("#ability-function").value]
-                };
-                switch (document.querySelector("#ability-type").value) {
-                    case "0":
-                        character.actions.actions.push(newAbility);
-                        break;
-                    case "1":
-                        character.actions.bonusActions.push(newAbility);
-                        break;
-                    case "2":
-                        character.actions.reactions.push(newAbility);
-                        break;
-                    case "3":
-                        character.actions.other.push(newAbility);
-                        break;
-                }
-            })
-            document.querySelector(".new-ability button[id='cancel-ability']").addEventListener("click", () => {
-                document.querySelector(".new-ability").classList.add("hidden");
-                //also clear the input fields
-                document.querySelector("#ability-name").value = "";
-                document.querySelector("#ability-description").value = ""; 
-                document.querySelector("#ability-type").value = "action";
-                document.querySelector("#ability-function").value = "";
-            });
-        });
+      // Modal event listeners
+      document
+        .getElementById("add-ability")
+        .addEventListener("click", addNewAbility);
+      document
+        .getElementById("cancel-ability")
+        .addEventListener("click", hideAddAbilityModal);
+
+      // Close modal when clicking outside
+      newAbilityModal.addEventListener("click", (e) => {
+        if (e.target === newAbilityModal) {
+          hideAddAbilityModal();
+        }
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          !newAbilityModal.classList.contains("hidden")
+        ) {
+          hideAddAbilityModal();
+        }
+        if (
+          e.key === "Enter" &&
+          e.ctrlKey &&
+          !newAbilityModal.classList.contains("hidden")
+        ) {
+          addNewAbility();
+        }
+      });
+
+      // Initialize the UI
+      switchTab("actions");
+
+      // Log character object for debugging
+      console.log("Character object:", character);
+      console.log("Try clicking on abilities to execute their functions!");
+      console.log(
+        "In edit mode, you can add custom JavaScript functions that manipulate the character object."
+      );
     </script>
   </body>
 </html>
